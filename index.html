@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>QuickSolution — Smart Answers</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="topbar">
+<div class="brand"><span class="bolt">⚡</span><span class="title">QuickSolution</span></div>
+<div class="tag">Smart · Fast · Reliable</div>
+</header>
+<main class="container">
+<section class="card input-card">
+<label class="label">Ask a question or type a math expression</label>
+<textarea id="query" class="query" placeholder="e.g. Define photosynthesis or 12*3+5" inputmode="text" autocomplete="off"></textarea>
+<div class="file-row">
+<input id="file" type="file" accept="image/*" capture="environment" />
+<button id="askBtn" class="btn primary">Ask AI</button>
+<button id="calcBtn" class="btn ghost">Calculator</button>
+<button id="clearBtn" class="btn ghost">Clear</button>
+</div>
+<div id="adTop" class="ad-banner" data-admob-unit="ca-app-pub-3918492881414209/8459403545" data-admob-app="ca-app-pub-3918492881414209~6465996726">Advertisement</div>
+</section>
+
+<section class="card output-card">
+<div class="section-title">Solution</div>
+<div id="answer" class="answer-box">Your answer will appear here.</div>
+</section>
+
+<section class="card tools-card">
+<div class="section-title">Tools</div>
+<div class="tools">
+<div class="calc-inline">
+<input id="n1" class="num" placeholder="Number 1" inputmode="numeric" />
+<select id="op" class="op"><option value="+">+</option><option value="-">-</option><option value="*">×</option><option value="/">÷</option></select>
+<input id="n2" class="num" placeholder="Number 2" inputmode="numeric" />
+<button id="calcNow" class="btn small">Calc</button>
+</div>
+<div class="tool-actions">
+<button id="copyBtn" class="btn small ghost">Copy Answer</button>
+<button id="stepsBtn" class="btn small ghost">Show Steps</button>
+</div>
+</div>
+</section>
+
+<footer class="footer">© 2025 NextMind Labs · QuickSolution</footer>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
