@@ -3,51 +3,60 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>QuickSolution — Smart Answers</title>
+<title>QuickSolution AI</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <header class="topbar">
-<div class="brand"><span class="bolt">⚡</span><span class="title">QuickSolution</span></div>
-<div class="tag">Smart · Fast · Reliable</div>
+<div class="logo-wrap">
+<div class="bolt">⚡</div>
+<h1>QuickSolution AI</h1>
+<p class="tagline">Smart · Fast · Reliable</p>
+</div>
 </header>
 <main class="container">
 <section class="card input-card">
 <label class="label">Ask a question or type a math expression</label>
-<textarea id="query" class="query" placeholder="e.g. Define photosynthesis or 12*3+5" inputmode="text" autocomplete="off"></textarea>
-<div class="file-row">
-<input id="file" type="file" accept="image/*" capture="environment" />
+<textarea id="prompt" class="prompt" placeholder="e.g. Define photosynthesis or 12*3+5" rows="4" autocomplete="off"></textarea>
+<div class="controls">
+<div class="left-controls">
+<input id="fileInput" type="file" accept="image/*" />
 <button id="askBtn" class="btn primary">Ask AI</button>
-<button id="calcBtn" class="btn ghost">Calculator</button>
-<button id="clearBtn" class="btn ghost">Clear</button>
+<button id="calcBtn" class="btn">Calculator</button>
+<button id="clearBtn" class="btn">Clear</button>
 </div>
-<div id="adTop" class="ad-banner" data-admob-unit="ca-app-pub-3918492881414209/8459403545" data-admob-app="ca-app-pub-3918492881414209~6465996726">Advertisement</div>
+</div>
+<div id="adTop" class="ad-slot">Advertisement</div>
 </section>
-
-<section class="card output-card">
-<div class="section-title">Solution</div>
-<div id="answer" class="answer-box">Your answer will appear here.</div>
+<section class="card solution-card">
+<h2>Solution</h2>
+<div id="solution" class="solution">Your answer will appear here.</div>
 </section>
-
 <section class="card tools-card">
-<div class="section-title">Tools</div>
-<div class="tools">
-<div class="calc-inline">
-<input id="n1" class="num" placeholder="Number 1" inputmode="numeric" />
-<select id="op" class="op"><option value="+">+</option><option value="-">-</option><option value="*">×</option><option value="/">÷</option></select>
-<input id="n2" class="num" placeholder="Number 2" inputmode="numeric" />
-<button id="calcNow" class="btn small">Calc</button>
+<h2>Tools</h2>
+<div class="tools-grid">
+<input id="num1" class="num" placeholder="Number 1" inputmode="numeric" />
+<select id="op" class="op">
+<option value="+">+</option>
+<option value="-">-</option>
+<option value="*">×</option>
+<option value="/">÷</option>
+</select>
+<input id="num2" class="num" placeholder="Number 2" inputmode="numeric" />
+<button id="toolsCalc" class="btn primary">Calc</button>
 </div>
 <div class="tool-actions">
-<button id="copyBtn" class="btn small ghost">Copy Answer</button>
-<button id="stepsBtn" class="btn small ghost">Show Steps</button>
-</div>
+<button id="copyBtn" class="btn">Copy Answer</button>
+<button id="stepsBtn" class="btn">Show Steps</button>
+<button id="clearAllBtn" class="btn">Clear All</button>
 </div>
 </section>
-
-<footer class="footer">© 2025 NextMind Labs · QuickSolution</footer>
-</main>
-
-<script src="script.js"></script>
+<footer class="footer">
+<div id="adBottom" class="ad-slot">Advertisement</div>
+<p>© 2025 NextMind Labs · QuickSolution AI</p>
+</footer>
+<script src="script.js" defer></script>
+<script async data-cfasync="false" src="//pl27971450.effectivegatecpm.com/9bac1dda009a5037391398006d2217aa/invoke.js"></script>
+<div id="container-9bac1dda009a5037391398006d2217aa" style="display:none"></div>
 </body>
 </html>
