@@ -1,45 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QuickSolution</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>QuickSolution</h1>
-      <p class="tagline">Get instant stepwise answers — type or upload your question.</p>
-    </header>
+    <h1>QuickSolution</h1>
+    <p class="subtitle">Your instant study companion ⚡</p>
 
-    <div class="input-area">
-      <select id="subject">
-        <option value="general">General</option>
-        <option value="gk">GK (Politics / SST)</option>
-        <option value="science">Science</option>
-        <option value="math">Math</option>
-        <option value="english">English</option>
-      </select>
+    <!-- Subject Selection -->
+    <select id="subject">
+      <option value="">-- Select Subject --</option>
+      <option value="Physics">Physics</option>
+      <option value="Chemistry">Chemistry</option>
+      <option value="Biology">Biology</option>
+      <option value="Maths">Maths</option>
+      <option value="GK">General Knowledge</option>
+    </select>
 
-      <textarea id="question" placeholder="Type your question here..."></textarea>
+    <!-- Question Box -->
+    <textarea id="question" placeholder="Type or paste your question here..."></textarea>
 
-      <label for="imageUpload" class="upload-label">
-        📷 Upload Question Image
-      </label>
-      <input type="file" id="imageUpload" accept="image/*" />
+    <!-- Upload Image Option -->
+    <input type="file" id="imageUpload" accept="image/*">
 
-      <button id="askBtn">Get Answer</button>
+    <!-- Submit Button -->
+    <button id="askBtn">Get Answer</button>
+
+    <!-- Answer Section -->
+    <div id="answerSection">
+      <h2>Answer</h2>
+      <p id="answerText">Your answer will appear here...</p>
     </div>
 
-    <div id="answerBox">
-      <h3>Answer:</h3>
-      <div id="answer"></div>
-    </div>
+    <!-- Download APK Button -->
+    <a href="QuickSolution.apk" download class="download-btn">
+      📦 Download QuickSolution App
+    </a>
 
-    <div id="ads">
-      <p>Sponsored Ad</p>
-      <iframe src="https://ads.adserver.free/" title="Ad Space"></iframe>
+    <!-- Ad Section -->
+    <div id="adSection">
+      <p>Advertisement</p>
+      <div class="ad-box">Your ads will appear here</div>
     </div>
   </div>
 
