@@ -36,8 +36,8 @@
       <p id="answerText">Your answer will appear here...</p>
     </div>
 
-    <!-- Download APK Button -->
-    <a href="QuickSolution.apk" download class="download-btn">
+    <!-- Download APK Button (hidden initially) -->
+    <a id="downloadApk" href="QuickSolution.apk" download class="download-btn" style="display: none;">
       📦 Download QuickSolution App
     </a>
 
@@ -49,5 +49,15 @@
   </div>
 
   <script src="script.js"></script>
+  <script>
+    // Check if APK file exists before showing button
+    fetch("QuickSolution.apk", { method: "HEAD" })
+      .then(res => {
+        if (res.ok) {
+          document.getElementById("downloadApk").style.display = "block";
+        }
+      })
+      .catch(err => console.log("APK not found:", err));
+  </script>
 </body>
 </html>
