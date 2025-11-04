@@ -1,32 +1,116 @@
-elSteps.addEventListener("click",()=>{
-  const q = elPrompt.value.trim().toLowerCase();
-  const txt = elSolution.textContent || "";
+const apis = [
+  { name: "Gemini", url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyBFCWB11MXuQXN50o1uDm06GUZpq279QA0" },
+  { name: "SambaNova", url: "https://api.sambanova.ai/v1/chat/completions", key: "4ae9a3bc-38a2-4201-857d-8e96302394b7" },
+  { name: "DeveloperBox", url: "https://billing.developerbox.xyz/apimaker/apiforlink.php?token=klt3r287wyl6nyqfr8c2" }
+];
 
-  if(!txt || txt === "Your answer will appear here.") {
-    show("Please ask a question first.");
-    return;
-  }
+const elPrompt = document.getElementById("prompt");
+const elAsk = document.getElementById("askBtn");
+const elSolution = document.getElementById("solution");
+const elFile = document.getElementById("fileInput");
+const elToolsCalc = document.getElementById("toolsCalc");
+const elNum1 = document.getElementById("num1");
+const elNum2 = document.getElementById("num2");
+const elOp = document.getElementById("op");
+const elSteps = document.getElementById("stepsBtn");
+const elClear = document.getElementById("clearBtn");
 
-  // Check if it's a math result
-  if(txt.includes("Result:")) {
-    show(txt + "\n\nSteps:\n1) Identify the math expression\n2) Replace × and ÷ with * and /\n3) Evaluate safely and display the numeric result");
-    return;
-  }
+function show(msg){ elSolution.textContent = msg; }
 
-  // Try to provide logical steps dynamically
-  if(q.includes("photosynthesis")) {
-    show(txt + "\n\nSteps:\n1) Light absorbed by chlorophyll\n2) Water splits, releasing oxygen\n3) CO2 converted to glucose\n4) Energy stored in sugars");
-  } 
-  else if(q.includes("cell")) {
-    show(txt + "\n\nSteps:\n1) Define cell as life’s structural unit\n2) Identify cell parts (nucleus, membrane, etc.)\n3) Explain their functions\n4) Relate to living systems");
+function typeWriter(text){
+  elSolution.textContent = "";
+  let i = 0;
+  const speed = 25;
+  function type(){
+    if(i < text.length){
+      elSolution.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
   }
-  else if(q.includes("democracy")) {
-    show(txt + "\n\nSteps:\n1) Define democracy\n2) Explain representation and voting\n3) Discuss institutions ensuring balance of power");
+  type();
+}
+
+function localMath(expr){
+  try {
+    if(!/[^0-9+\-*/().\s]/.test(expr)){
+      const safe = expr.replace(/×/g,"*").replace(/÷/g,"/");
+      return Function('"use strict";return ('+safe+')')();
+    }
+  } catch(e){}
+  return null;
+}
+
+async function extractTextFromImage(file) {
+  const fd = new FormData();
+  fd.append("file", file);
+  fd.append("language", "eng");
+  const res = await fetch("https://api.ocr.space/parse/image", { method: "POST", body: fd });
+  const json = await res.json();
+  return json?.ParsedResults?.[0]?.ParsedText || "";
+}
+
+async function askQuestion(q){
+  const math = localMath(q);
+  if(math !== null) return "Result: " + math;
+
+  for(const api of apis){
+    try{
+      const body = JSON.stringify({ contents:[{ parts:[{ text:q }]}] });
+      const headers = { "Content-Type":"application/json" };
+      if(api.key) headers["Authorization"] = "Bearer " + api.key;
+
+      const res = await fetch(api.url,{ method:"POST", headers, body });
+      if(res.ok){
+        const data = await res.json();
+        const txt = data?.candidates?.[0]?.content?.parts?.[0]?.text
+          || data?.choices?.[0]?.message?.content
+          || data?.answer;
+        if(txt) return txt;
+      }
+    }catch(e){}
   }
-  else if(q.includes("thermodynamics")) {
-    show(txt + "\n\nSteps:\n1) Identify type of system (open/closed)\n2) Apply laws (0th, 1st, 2nd)\n3) Calculate energy exchange");
-  }
-  else {
-    show(txt + "\n\nLogical Steps:\n1) Read and understand the concept\n2) Break it into main ideas\n3) Use examples or comparisons\n4) Connect to real-world applications");
-  }
-});
+  return "Logical analysis:\n1. Understanding question\n2. Searching context\n3. Forming explanation…\nResult: Concept not found locally.";
+}
+
+elAsk.onclick = async () => {
+  const q = elPrompt.value.trim();
+  if(!q){ show("Please type a question."); return; }
+  show("⚡ Thinking...");
+  const ans = await askQuestion(q);
+  typeWriter(ans);
+};
+
+elFile.onchange = async (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  show("📸 Analyzing image...");
+  const extracted = await extractTextFromImage(file);
+  if(extracted) {
+    elPrompt.value = extracted.trim();
+    show("Text extracted! Click 'Get Answer' to continue.");
+  } else show("Couldn't extract text from image.");
+};
+
+elToolsCalc.onclick = () => {
+  const a = parseFloat(elNum1.value||0);
+  const b = parseFloat(elNum2.value||0);
+  const op = elOp.value;
+  let result = 0;
+  if(op==="+") result=a+b;
+  if(op==="-") result=a-b;
+  if(op==="*") result=a*b;
+  if(op==="/") result=b===0?"Infinity":a/b;
+  show("Result: "+result);
+};
+
+elSteps.onclick = () => {
+  const txt = elSolution.textContent;
+  if(!txt || txt.includes("Thinking")) return;
+  show(txt + "\n\nSteps:\n1) Identify topic\n2) Analyze logically\n3) Generate structured response.");
+};
+
+elClear.onclick = () => {
+  elPrompt.value="";
+  show("Your answer will appear here.");
+};
