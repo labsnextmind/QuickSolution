@@ -3,54 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QuickSolution — NextMind Labs</title>
+  <title>QuickSolution</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="topbar">
-    <h1 class="logo">⚡ QuickSolution</h1>
-    <p class="tagline">Made with ❤️ by NextMind Labs</p>
-  </div>
+  <div class="container">
+    <header>
+      <h1>QuickSolution</h1>
+      <p class="tagline">Get instant stepwise answers — type or upload your question.</p>
+    </header>
 
-  <div class="container card input-card">
-    <label class="label">Ask your question</label>
-    <textarea id="prompt" class="prompt" placeholder="Type or paste your question..."></textarea>
-
-    <div class="upload-section">
-      <label for="fileInput" class="btn upload-btn">📷 Upload / Capture Image</label>
-      <input type="file" id="fileInput" accept="image/*" capture="camera" hidden>
-    </div>
-
-    <div class="controls">
-      <button id="askBtn" class="btn primary">Get Answer</button>
-      <button id="stepsBtn" class="btn">Steps</button>
-      <button id="clearBtn" class="btn">Clear</button>
-    </div>
-  </div>
-
-  <div class="ad-slot" id="adBoxTop">
-    <script async data-cfasync="false" src="//pl27942882.effectivegatecpm.com/9bfc9b03277a9db3cc50c1272d4a02da/invoke.js"></script>
-    <div id="container-9bfc9b03277a9db3cc50c1272d4a02da"></div>
-  </div>
-
-  <div class="container card solution-card">
-    <h2>Answer</h2>
-    <div id="solution" class="solution">Your answer will appear here.</div>
-  </div>
-
-  <div class="container card tools-card">
-    <h2>Quick Calculator</h2>
-    <div class="tools-grid">
-      <input type="number" id="num1" class="num" placeholder="Num 1" />
-      <select id="op" class="op">
-        <option>+</option><option>-</option><option>*</option><option>/</option>
+    <div class="input-area">
+      <select id="subject">
+        <option value="general">General</option>
+        <option value="gk">GK (Politics / SST)</option>
+        <option value="science">Science</option>
+        <option value="math">Math</option>
+        <option value="english">English</option>
       </select>
-      <input type="number" id="num2" class="num" placeholder="Num 2" />
-      <button id="toolsCalc" class="btn primary">=</button>
+
+      <textarea id="question" placeholder="Type your question here..."></textarea>
+
+      <label for="imageUpload" class="upload-label">
+        📷 Upload Question Image
+      </label>
+      <input type="file" id="imageUpload" accept="image/*" />
+
+      <button id="askBtn">Get Answer</button>
+    </div>
+
+    <div id="answerBox">
+      <h3>Answer:</h3>
+      <div id="answer"></div>
+    </div>
+
+    <div id="ads">
+      <p>Sponsored Ad</p>
+      <iframe src="https://ads.adserver.free/" title="Ad Space"></iframe>
     </div>
   </div>
 
-  <footer class="footer">Made with ❤️ by NextMind Labs</footer>
   <script src="script.js"></script>
 </body>
 </html>
