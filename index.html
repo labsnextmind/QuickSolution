@@ -1,62 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>QuickSolution AI</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickSolution — NextMind Labs</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header class="topbar">
-<div class="logo-wrap">
-<div class="bolt">⚡</div>
-<h1>QuickSolution AI</h1>
-<p class="tagline">Smart · Fast · Reliable</p>
-</div>
-</header>
-<main class="container">
-<section class="card input-card">
-<label class="label">Ask a question or type a math expression</label>
-<textarea id="prompt" class="prompt" placeholder="e.g. Define photosynthesis or 12*3+5" rows="4" autocomplete="off"></textarea>
-<div class="controls">
-<div class="left-controls">
-<input id="fileInput" type="file" accept="image/*" />
-<button id="askBtn" class="btn primary">Ask AI</button>
-<button id="calcBtn" class="btn">Calculator</button>
-<button id="clearBtn" class="btn">Clear</button>
-</div>
-</div>
-<div id="adTop" class="ad-slot">Advertisement</div>
-</section>
-<section class="card solution-card">
-<h2>Solution</h2>
-<div id="solution" class="solution">Your answer will appear here.</div>
-</section>
-<section class="card tools-card">
-<h2>Tools</h2>
-<div class="tools-grid">
-<input id="num1" class="num" placeholder="Number 1" inputmode="numeric" />
-<select id="op" class="op">
-<option value="+">+</option>
-<option value="-">-</option>
-<option value="*">×</option>
-<option value="/">÷</option>
-</select>
-<input id="num2" class="num" placeholder="Number 2" inputmode="numeric" />
-<button id="toolsCalc" class="btn primary">Calc</button>
-</div>
-<div class="tool-actions">
-<button id="copyBtn" class="btn">Copy Answer</button>
-<button id="stepsBtn" class="btn">Show Steps</button>
-<button id="clearAllBtn" class="btn">Clear All</button>
-</div>
-</section>
-<footer class="footer">
-<div id="adBottom" class="ad-slot">Advertisement</div>
-<p>© 2025 NextMind Labs · QuickSolution AI</p>
-</footer>
-<script src="script.js" defer></script>
-<script async data-cfasync="false" src="//pl27971450.effectivegatecpm.com/9bac1dda009a5037391398006d2217aa/invoke.js"></script>
-<div id="container-9bac1dda009a5037391398006d2217aa" style="display:none"></div>
+  <div class="topbar">
+    <h1 class="logo">⚡ QuickSolution</h1>
+    <p class="tagline">Made with ❤️ by NextMind Labs</p>
+  </div>
+
+  <div class="container card input-card">
+    <label class="label">Ask your question</label>
+    <textarea id="prompt" class="prompt" placeholder="Type or paste your question..."></textarea>
+
+    <div class="upload-section">
+      <label for="fileInput" class="btn upload-btn">📷 Upload / Capture Image</label>
+      <input type="file" id="fileInput" accept="image/*" capture="camera" hidden>
+    </div>
+
+    <div class="controls">
+      <button id="askBtn" class="btn primary">Get Answer</button>
+      <button id="stepsBtn" class="btn">Steps</button>
+      <button id="clearBtn" class="btn">Clear</button>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="adBoxTop">
+    <script async data-cfasync="false" src="//pl27942882.effectivegatecpm.com/9bfc9b03277a9db3cc50c1272d4a02da/invoke.js"></script>
+    <div id="container-9bfc9b03277a9db3cc50c1272d4a02da"></div>
+  </div>
+
+  <div class="container card solution-card">
+    <h2>Answer</h2>
+    <div id="solution" class="solution">Your answer will appear here.</div>
+  </div>
+
+  <div class="container card tools-card">
+    <h2>Quick Calculator</h2>
+    <div class="tools-grid">
+      <input type="number" id="num1" class="num" placeholder="Num 1" />
+      <select id="op" class="op">
+        <option>+</option><option>-</option><option>*</option><option>/</option>
+      </select>
+      <input type="number" id="num2" class="num" placeholder="Num 2" />
+      <button id="toolsCalc" class="btn primary">=</button>
+    </div>
+  </div>
+
+  <footer class="footer">Made with ❤️ by NextMind Labs</footer>
+  <script src="script.js"></script>
 </body>
 </html>
