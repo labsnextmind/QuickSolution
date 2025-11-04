@@ -1,38 +1,66 @@
-const express=require("express")
-const fetch=require("node-fetch")
-const multer=require("multer")
-const upload=multer()
-const app=express()
-app.use(express.json())
-const OPENAI_KEY=""
-const GOOGLE_KEY="AIzaSyBFCWB11MXuQXN50o1uDm06GUZpq279QA0"
-app.post("/api/ask",async(req,res)=>{
-  const q=req.body.q||""
-  try{
-    if(q && /^[0-9+\-*/().\s×÷]+$/.test(q)){
-      const s=q.replace(/×/g,"*").replace(/÷/g,"/")
-      const out=Function('"use strict";return ('+s+')')()
-      return res.json({answer:String(out)})
-    }
-    if(OPENAI_KEY){
-      const r=await fetch("https://api.openai.com/v1/chat/completions",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+OPENAI_KEY},body:JSON.stringify({model:"gpt-4o-mini",messages:[{role:"user",content:q}],max_tokens:800})})
-      const j=await r.json()
-      const text=j?.choices?.[0]?.message?.content || j?.choices?.[0]?.text
-      if(text) return res.json({answer:text})
-    }
-    const cs="Short fallback: "+q
-    return res.json({answer:cs})
-  }catch(e){
-    return res.json({answer:"Unable to generate response."})
+import express from "express";
+import fetch from "node-fetch";
+import cors from "cors";
+import multer from "multer";
+import FormData from "form-data";
+import fs from "fs";
+
+const app = express();
+const upload = multer({ dest: "uploads/" });
+app.use(express.json());
+app.use(cors());
+app.use(express.static("."));
+
+const apis = [
+  "https://api.monkedev.com/fun/chat",
+  "https://api.affiliateplus.xyz/api/chatbot",
+  "https://api.quotable.io/random"
+];
+
+const OCR_API = "https://api.ocr.space/parse/image";
+
+app.post("/api/ocr", upload.single("image"), async (req, res) => {
+  try {
+    const imagePath = req.file.path;
+    const form = new FormData();
+    form.append("apikey", "helloworld");
+    form.append("file", fs.createReadStream(imagePath));
+
+    const response = await fetch(OCR_API, { method: "POST", body: form });
+    const result = await response.json();
+
+    fs.unlinkSync(imagePath);
+    const extractedText = result?.ParsedResults?.[0]?.ParsedText || "";
+    res.json({ text: extractedText.trim() });
+  } catch (err) {
+    res.status(500).json({ error: "OCR failed" });
   }
-})
-app.post("/api/upload",upload.single("file"),async(req,res)=>{
-  try{
-    const q=req.body.q||""
-    const info="Processed image and question locally. Quick fallback answer for: "+q
-    return res.json({answer:info})
-  }catch(e){return res.json({answer:"Unable to process file"})}
-}
-)
-const port=process.env.PORT||3000
-app.listen(port)
+});
+
+app.post("/api/getAnswer", async (req, res) => {
+  const { question } = req.body;
+  let responseText = "";
+
+  for (let api of apis) {
+    try {
+      const url =
+        api.includes("chatbot") || api.includes("monkedev")
+          ? `${api}?message=${encodeURIComponent(question)}`
+          : api;
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.response || data.reply || data.content) {
+        responseText = data.response || data.reply || data.content;
+        break;
+      }
+    } catch {
+      continue;
+    }
+  }
+
+  if (!responseText) responseText = "No valid response received.";
+  res.json({ answer: responseText });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
